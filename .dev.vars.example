@@ -1,0 +1,5 @@
+# Development environment variables
+
+# Google PageSpeed Insights API Key
+PAGESPEED_API_KEY=""
+

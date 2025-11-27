@@ -1,0 +1,22 @@
+{
+  "name": "ai-website-inspector",
+  "version": "1.0.0",
+  "description": "AI-powered website inspector using Cloudflare Workers AI",
+  "main": "src/worker.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "build": "cd frontend && npm install && npm run build",
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build"
+  },
+  "keywords": ["cloudflare", "workers", "ai", "seo", "react"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "wrangler": "^3.82.0",
+    "typescript": "^5.3.3"
+  }
+}
+
