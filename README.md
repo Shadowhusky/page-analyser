@@ -260,39 +260,6 @@ You can change this in `src/worker.ts` in the `analyzeWithAI` function.
 The `InspectorDO` class manages per-user state:
 - Stores up to 50 most recent reports per user
 - Provides `/add` and `/list` endpoints
-- Persists data across Worker invocations
-
-## 📊 Metrics Tracked (30+ Data Points!)
-
-**SEO:**
-- Title, Meta Description, Canonical URL
-- Headings (H1, H2, H3) + uniqueness
-- Open Graph tags, Structured Data
-- Language attribute, Robots meta
-
-**Performance:**
-- HTML size, Text/HTML ratio
-- Script count, Stylesheet count
-- Inline styles, Load time
-- **REAL Core Web Vitals** (LCP, FID, CLS, FCP, TTFB)
-- PageSpeed Performance Score
-
-**Accessibility:**
-- Image alt text coverage
-- Viewport meta tag
-- Language attribute
-- Semantic HTML structure
-
-**Best Practices:**
-- HTTPS usage
-- Charset declaration
-- Link structure (internal/external)
-- Mobile-friendly indicators
-
-## 📝 Future Enhancements
-
-## 📄 License
-
-MIT
+- Persists data across Worker invocations 
 
 **Developed by Richard with ❤️**

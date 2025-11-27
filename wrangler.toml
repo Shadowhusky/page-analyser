@@ -13,14 +13,15 @@ name = "INSPECTOR_DO"
 class_name = "InspectorDO"
 script_name = "ai-website-inspector"
 
-# Durable Object migrations
+# Durable Object migrations  
 [[migrations]]
 tag = "v1"
-new_classes = ["InspectorDO"]
+new_sqlite_classes = ["InspectorDO"]
 
-# Static assets for serving the frontend
-[site]
-bucket = "./frontend/dist"
+# KV Namespace for static assets
+[[kv_namespaces]]
+binding = "ASSETS"
+id = "4e8930665cc64cdda8b54b221e953d44"
 
 # Environment variables 
 # [vars]

@@ -9,7 +9,7 @@ export { InspectorDO };
 interface Env {
   AI: any;
   INSPECTOR_DO: DurableObjectNamespace;
-  __STATIC_CONTENT: KVNamespace;
+  ASSETS: KVNamespace;
   PAGESPEED_API_KEY?: string; // Optional PageSpeed Insights API key
 }
 
@@ -596,6 +596,14 @@ function getUserId(request: Request): string {
  */
 async function serveStaticAsset(request: Request, env: Env): Promise<Response> {
   try {
+    // Check if ASSETS KV is available
+    if (!env.ASSETS) {
+      return new Response('Static assets not configured', { 
+        status: 500,
+        headers: { 'Content-Type': 'text/plain' }
+      });
+    }
+
     const url = new URL(request.url);
     let path = url.pathname;
 
@@ -604,14 +612,20 @@ async function serveStaticAsset(request: Request, env: Env): Promise<Response> {
       path = '/index.html';
     }
 
-    // Try to get from KV (site bucket)
-    const asset = await env.__STATIC_CONTENT.get(path.slice(1), 'arrayBuffer');
+    // Remove leading slash for KV key
+    const key = path.startsWith('/') ? path.slice(1) : path;
+
+    // Try to get from KV
+    const asset = await env.ASSETS.get(key, 'arrayBuffer');
     
     if (!asset) {
       // If not found, serve index.html for SPA routing
-      const indexAsset = await env.__STATIC_CONTENT.get('index.html', 'arrayBuffer');
+      const indexAsset = await env.ASSETS.get('index.html', 'arrayBuffer');
       if (!indexAsset) {
-        return new Response('Not Found', { status: 404 });
+        return new Response(`Asset not found: ${key}`, { 
+          status: 404,
+          headers: { 'Content-Type': 'text/plain' }
+        });
       }
       return new Response(indexAsset, {
         headers: { 'Content-Type': 'text/html' },
@@ -626,7 +640,10 @@ async function serveStaticAsset(request: Request, env: Env): Promise<Response> {
     });
   } catch (error) {
     console.error('Static asset error:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    return new Response(`Error: ${error instanceof Error ? error.message : String(error)}`, { 
+      status: 500,
+      headers: { 'Content-Type': 'text/plain' }
+    });
   }
 }
 
